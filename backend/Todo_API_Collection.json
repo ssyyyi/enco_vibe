@@ -1,0 +1,305 @@
+{
+  "info": {
+    "name": "Todo API Collection",
+    "description": "FastAPI Todo 애플리케이션의 모든 엔드포인트를 테스트하는 컬렉션",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "todo_id",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "기본 엔드포인트",
+      "item": [
+        {
+          "name": "API 상태 확인",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/",
+              "host": ["{{base_url}}"],
+              "path": [""]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "CRUD 엔드포인트",
+      "item": [
+        {
+          "name": "모든 할 일 조회",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/todos",
+              "host": ["{{base_url}}"],
+              "path": ["todos"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "새 할 일 생성",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Postman으로 테스트하기\",\n  \"description\": \"Postman을 사용하여 API를 테스트합니다\",\n  \"completed\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/todos",
+              "host": ["{{base_url}}"],
+              "path": ["todos"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "특정 할 일 조회",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/todos/{{todo_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["todos", "{{todo_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "할 일 업데이트",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"업데이트된 제목\",\n  \"description\": \"업데이트된 설명\",\n  \"completed\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/todos/{{todo_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["todos", "{{todo_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "할 일 완료 상태 토글",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/todos/{{todo_id}}/toggle",
+              "host": ["{{base_url}}"],
+              "path": ["todos", "{{todo_id}}", "toggle"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "할 일 삭제",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/todos/{{todo_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["todos", "{{todo_id}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "에러 케이스 테스트",
+      "item": [
+        {
+          "name": "존재하지 않는 할 일 조회 (404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/todos/non-existent-id",
+              "host": ["{{base_url}}"],
+              "path": ["todos", "non-existent-id"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "빈 제목으로 할 일 생성 (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"\",\n  \"description\": \"빈 제목 테스트\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/todos",
+              "host": ["{{base_url}}"],
+              "path": ["todos"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "잘못된 JSON 형식 (422)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"잘못된 JSON\",\n  \"description\": \"테스트\",\n  \"completed\": \"not-a-boolean\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/todos",
+              "host": ["{{base_url}}"],
+              "path": ["todos"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "존재하지 않는 할 일 업데이트 (404)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"업데이트 테스트\",\n  \"description\": \"존재하지 않는 할 일\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/todos/non-existent-id",
+              "host": ["{{base_url}}"],
+              "path": ["todos", "non-existent-id"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "존재하지 않는 할 일 삭제 (404)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/todos/non-existent-id",
+              "host": ["{{base_url}}"],
+              "path": ["todos", "non-existent-id"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "테스트 전용 엔드포인트",
+      "item": [
+        {
+          "name": "테스트 상태 확인",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/test/status",
+              "host": ["{{base_url}}"],
+              "path": ["test", "status"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "샘플 데이터 추가",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/test/sample-data",
+              "host": ["{{base_url}}"],
+              "path": ["test", "sample-data"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "모든 데이터 삭제",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/test/clear-all",
+              "host": ["{{base_url}}"],
+              "path": ["test", "clear-all"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// 응답 상태 코드 확인",
+          "pm.test(\"Status code is 200\", function () {",
+          "    pm.response.to.have.status(200);",
+          "});",
+          "",
+          "// 응답 시간 확인",
+          "pm.test(\"Response time is less than 1000ms\", function () {",
+          "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+          "});",
+          "",
+          "// JSON 응답 확인",
+          "pm.test(\"Response is JSON\", function () {",
+          "    pm.response.to.be.json;",
+          "});"
+        ]
+      }
+    }
+  ]
+}
