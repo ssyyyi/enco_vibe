@@ -250,12 +250,4 @@ npm install
 
 이 프로젝트는 MIT 라이선스 하에 배포됩니다.
 
-## 👥 팀
 
-- **개발자**: [Your Name]
-- **프로젝트**: Todo API with React Frontend
-- **버전**: 1.0.0
-
----
-
-**Happy Coding! 🎉**
